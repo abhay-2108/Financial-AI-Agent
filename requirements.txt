@@ -1,0 +1,12 @@
+langchain
+langchain-community
+ollama
+chromadb
+sentence-transformers
+PyMuPDF
+pdfplumber
+streamlit
+python-dotenv
+pandas
+tqdm
+langchain-ollama
