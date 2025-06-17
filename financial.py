@@ -35,7 +35,7 @@ if "rag_chain" not in st.session_state:
 
 MODEL_NAME = "llama3.1:8b"
 llm = OllamaLLM(model=MODEL_NAME, temperature=0.1)
-embedding_model = OllamaEmbeddings(model=MODEL_NAME)
+embedding_model = OllamaEmbeddings(model="mxbai-embed-large")
 
 st.markdown("<h1 style='text-align: center; margin-bottom: 10px;'>FinAgent - Financial Chatbot</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: gray;'>Upload financial documents (PDF, Excel, CSV, etc.) and chat with them using AI</p>", unsafe_allow_html=True)
