@@ -1,4 +1,13 @@
+import sys
 import os
+
+# Fix for chromadb sqlite3 version issue
+try:
+    import pysqlite3
+    sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+except ImportError:
+    raise ImportError("pysqlite3 is required but not installed. Add 'pysqlite3-binary' to requirements.txt.")
+
 import streamlit as st
 from tempfile import NamedTemporaryFile
 
@@ -18,22 +27,18 @@ from langchain.schema.runnable import RunnableMap, RunnablePassthrough
 
 st.set_page_config(page_title="FinAgent - Financial Chatbot", layout="wide")
 
-
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
 
 if "rag_chain" not in st.session_state:
     st.session_state["rag_chain"] = None
 
-
 MODEL_NAME = "llama3.1:8b"
 llm = OllamaLLM(model=MODEL_NAME, temperature=0.1)
 embedding_model = OllamaEmbeddings(model=MODEL_NAME)
 
-
 st.markdown("<h1 style='text-align: center; margin-bottom: 10px;'>FinAgent - Financial Chatbot</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: gray;'>Upload financial documents (PDF, Excel, CSV, etc.) and chat with them using AI</p>", unsafe_allow_html=True)
-
 
 uploaded_file = st.file_uploader(" ", type=["pdf", "csv", "txt", "html", "htm", "xlsx"], label_visibility="collapsed")
 
@@ -118,15 +123,15 @@ with st.container():
             max-height: 500px;
             overflow-y: auto;
             padding: 10px;
-            border: 1px solid 
+            border: 1px solid #ccc;
             border-radius: 10px;
-            background-color: 
+            background-color: #f8f9fa;
             margin-bottom: 15px;
         }
         .user-msg {
             text-align: right;
-            background-color: 
-            color: 
+            background-color: #d1e7dd;
+            color: #000;
             display: block;
             padding: 10px 15px;
             margin: 5px 0 5px auto;
@@ -136,8 +141,8 @@ with st.container():
         }
         .ai-msg {
             text-align: left;
-            background-color: 
-            color: 
+            background-color: #e2e3e5;
+            color: #000;
             display: block;
             padding: 10px 15px;
             margin: 5px auto 5px 0;
